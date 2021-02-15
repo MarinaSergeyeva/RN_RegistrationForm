@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AuthScreen, {
   screenOptions as authScreenOptions,
@@ -18,7 +19,10 @@ const AuthStackNavigator = createStackNavigator();
 
 export const AuthNavigator = () => {
   return (
-    <AuthStackNavigator.Navigator screenOptions={defaultNavOptions}>
+    <AuthStackNavigator.Navigator
+      screenOptions={defaultNavOptions}
+      initialRouteName="Auth"
+    >
       <AuthStackNavigator.Screen
         name="Auth"
         component={AuthScreen}

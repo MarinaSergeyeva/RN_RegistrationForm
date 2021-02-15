@@ -10,9 +10,9 @@ const InfoScreen = () => {
     control,
     handleSubmit,
     errors,
-    formState: { touched, isDirty },
+    formState: { touched, isDirty, isValid },
   } = useForm({
-    mode: 'onSubmit',
+    mode: 'onChange',
     reValidateMode: 'onChange',
     resolver: yupResolver(infoValidationSchema),
   });
@@ -99,7 +99,7 @@ const InfoScreen = () => {
       </View>
 
       <Button
-        // disabled={isDirty || isValid}
+        disabled={isDirty || isValid}
         title="Submit"
         onPress={handleSubmit(onSubmit)}
       />
