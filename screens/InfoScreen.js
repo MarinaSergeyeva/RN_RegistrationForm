@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
+import { useTheme } from 'react-native-paper';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { infoValidationSchema } from '../schemas/InfoValidationSchema';
 import Card from '../components/Card';
@@ -24,6 +25,8 @@ const InfoScreen = props => {
     reValidateMode: 'onChange',
     resolver: yupResolver(infoValidationSchema),
   });
+
+  const { colors, fonts } = useTheme();
   const { navigation } = props;
 
   const onSubmit = data => {
@@ -71,7 +74,9 @@ const InfoScreen = props => {
             defaultValue=""
           />
           {errors.country && (
-            <Text style={styles.errorMessage}>{errors.country?.message}</Text>
+            <Text style={{ ...fonts.light, ...styles.errorMessage }}>
+              {errors.country?.message}
+            </Text>
           )}
           <Text style={styles.text}>Where where you born?</Text>
           <Controller
@@ -90,7 +95,9 @@ const InfoScreen = props => {
             defaultValue=""
           />
           {errors.city && (
-            <Text style={styles.errorMessage}>{errors.city?.message}</Text>
+            <Text style={{ ...fonts.light, ...styles.errorMessage }}>
+              {errors.city?.message}
+            </Text>
           )}
           <Text style={styles.text}>How old are you?</Text>
           <Controller
@@ -109,13 +116,16 @@ const InfoScreen = props => {
             defaultValue=""
           />
           {errors.age && (
-            <Text style={styles.errorMessage}>{errors.age?.message}</Text>
+            <Text style={{ ...fonts.light, ...styles.errorMessage }}>
+              {errors.age?.message}
+            </Text>
           )}
           <View style={styles.buttonContainer}>
             <Button
               disabled={!isValid}
               title="Submit"
               onPress={handleSubmit(onSubmit)}
+              color={colors.primary}
             />
           </View>
         </ScrollView>
@@ -148,10 +158,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 10,
   },
-    text: {
-        fontSize: 16,
-        fontWeight:'700'
-    },
+  text: {
+    fontSize: 16,
+    // fontWeight: '700',
+  },
   buttonContainer: {
     marginTop: 50,
   },

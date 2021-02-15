@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
+import { useTheme } from 'react-native-paper';
 import { authValidationSchema } from '../schemas/AuthValidationSchema';
 import Card from '../components/Card';
 
@@ -36,6 +37,7 @@ const AuthScreen = props => {
     dirty,
   } = formik;
 
+  const { colors, fonts } = useTheme();
   const { navigation } = props;
 
   const onHandleFormSubmit = () => {
@@ -58,7 +60,7 @@ const AuthScreen = props => {
             value={values.username}
             style={styles.input}
           />
-          <Text style={styles.errorMessage}>
+          <Text style={{ ...fonts.light, ...styles.errorMessage }}>
             {touched.username && errors.username}
           </Text>
           <TextInput
@@ -68,7 +70,7 @@ const AuthScreen = props => {
             value={values.email}
             style={styles.input}
           />
-          <Text style={styles.errorMessage}>
+          <Text style={{ ...fonts.light, ...styles.errorMessage }}>
             {touched.email && errors.email}
           </Text>
           <TextInput
@@ -78,7 +80,7 @@ const AuthScreen = props => {
             value={values.password}
             style={styles.input}
           />
-          <Text style={styles.errorMessage}>
+          <Text style={{ ...fonts.light, ...styles.errorMessage }}>
             {touched.password && errors.password}
           </Text>
           <View style={styles.buttonContainer}>
@@ -86,6 +88,7 @@ const AuthScreen = props => {
               disabled={!isValid || !dirty}
               onPress={onHandleFormSubmit}
               title="Next"
+              color={colors.primary}
             />
           </View>
         </ScrollView>

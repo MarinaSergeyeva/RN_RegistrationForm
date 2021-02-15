@@ -1,5 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
+import { useTheme } from 'react-native-paper';
 import { createStackNavigator } from '@react-navigation/stack';
 import AuthScreen, {
   screenOptions as authScreenOptions,
@@ -14,20 +15,21 @@ import Modal, {
   screenOptions as modalScreenOptions,
 } from '../components/Modal';
 
-const defaultNavOptions = {
-  headerStyle: {
-    backgroundColor: Platform.OS === 'android' ? 'blue' : '',
-  },
-  headerTintColor: Platform.OS === 'android' ? 'white' : 'green',
-};
-
 const AuthStackNavigator = createStackNavigator();
 
 export const AuthNavigator = () => {
+  const { colors } = useTheme();
+  const defaultNavOptions = {
+    headerStyle: {
+      backgroundColor: Platform.OS === 'android' ? colors.primary : '',
+    },
+    headerTintColor: Platform.OS === 'android' ? 'white' : colors.primary,
+  };
+
   return (
     <AuthStackNavigator.Navigator
       screenOptions={defaultNavOptions}
-      initialRouteName="Auth"
+      initialRouteName="Info"
     >
       <AuthStackNavigator.Screen
         name="Auth"
