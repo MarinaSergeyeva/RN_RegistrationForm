@@ -17,20 +17,23 @@ const InfoScreen = () => {
     resolver: yupResolver(infoValidationSchema),
   });
 
-  const onSubmit = data => {
-    console.log(data);
-    const result = new Promise((resolve, reject) => {
+  const onSubmit = (data) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(<SuccessScreen/>);
-      }, 1000);
-    });
-      
-    result
-      .then(data => console.log(data))
-      .catch(error => console.log(error))
-      .finally(() => console.log('finished!'));
+        const success = Math.random() > 0.3;
+        console.log('success', success);
 
-    return result;
+        if (success) {
+          const result = data;
+          resolve(result);
+        }
+
+        const error = 'Something went wrong';
+        reject(error);
+      }, 1000);
+    })
+      .catch(error => console.log('promiseError', error))
+      .finally(() => console.log('finished!'));
   };
 
   return (
@@ -102,6 +105,10 @@ const InfoScreen = () => {
       />
     </View>
   );
+};
+
+export const screenOptions = {
+  headerTitle: 'Information',
 };
 
 const styles = StyleSheet.create({

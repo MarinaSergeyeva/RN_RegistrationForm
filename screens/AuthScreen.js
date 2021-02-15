@@ -71,6 +71,10 @@ const AuthScreen = props => {
   );
 };
 
+export const screenOptions = {
+  headerTitle: 'Authenticate',
+};
+
 const styles = StyleSheet.create({
   form: {
     margin: 20,
