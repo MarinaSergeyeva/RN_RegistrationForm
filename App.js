@@ -7,17 +7,18 @@
  */
 
 import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import AuthScreen from './screens/AuthScreen';
+import InfoScreen from './screens/InfoScreen';
 import SuccessScreen from './screens/SuccessScreen';
 
 const App = () => {
- 
   return (
     <View>
-      <AuthScreen />
+      {/* <AuthScreen /> */}
+      <InfoScreen />
       {/* <SuccessScreen/> */}
     </View>
   );
