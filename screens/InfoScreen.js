@@ -1,35 +1,45 @@
 import React from 'react';
-import { Text, View, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import {
+  Text,
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  KeyboardAvoidingView,
+  ScrollView,
+} from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { infoValidationSchema } from '../schemas/InfoValidationSchema';
-import SuccessScreen from './SuccessScreen';
+import Card from '../components/Card';
 
-const InfoScreen = () => {
+const InfoScreen = props => {
   const {
     control,
     handleSubmit,
     errors,
-    formState: { touched, isDirty, isValid },
+    formState: { isValid },
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
     resolver: yupResolver(infoValidationSchema),
   });
+  const { navigation } = props;
 
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const success = Math.random() > 0.3;
         console.log('success', success);
 
         if (success) {
-          const result = data;
-          resolve(result);
+          resolve(data);
+          navigation.navigate('Success');
+        } else {
+          const error = 'Something went wrong';
+          reject(error);
+          navigation.navigate('MyModal');
         }
-
-        const error = 'Something went wrong';
-        reject(error);
       }, 1000);
     })
       .catch(error => console.log('promiseError', error))
@@ -37,88 +47,95 @@ const InfoScreen = () => {
   };
 
   return (
-    <View style={styles.form}>
-      <View style={styles.fieldsContainer}>
-        <Text>Where are you from?</Text>
-        <Controller
-          control={control}
-          render={({ onChange, onBlur, value }) => (
-            <TextInput
-              placeholder="country"
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={value => onChange(value)}
-              value={value}
-            />
+    <KeyboardAvoidingView
+      behavior="height"
+      keyboardVerticalOffset={50}
+      style={styles.screen}
+    >
+      <Card style={styles.infoContainer}>
+        <ScrollView>
+          <Text style={styles.text}>Where are you from?</Text>
+          <Controller
+            control={control}
+            render={({ onChange, onBlur, value }) => (
+              <TextInput
+                placeholder="country"
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+              />
+            )}
+            name="country"
+            rules={{ required: true }}
+            defaultValue=""
+          />
+          {errors.country && (
+            <Text style={styles.errorMessage}>{errors.country?.message}</Text>
           )}
-          name="country"
-          rules={{ required: true }}
-          defaultValue=""
-        />
-        {errors.country && (
-          <Text style={styles.errorMessage}>{errors.country?.message}</Text>
-        )}
-        <Text>Where where you born?</Text>
-        <Controller
-          control={control}
-          render={({ onChange, onBlur, value }) => (
-            <TextInput
-              placeholder="city"
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={value => onChange(value)}
-              value={value}
-            />
+          <Text style={styles.text}>Where where you born?</Text>
+          <Controller
+            control={control}
+            render={({ onChange, onBlur, value }) => (
+              <TextInput
+                placeholder="city"
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+              />
+            )}
+            name="city"
+            rules={{ required: true }}
+            defaultValue=""
+          />
+          {errors.city && (
+            <Text style={styles.errorMessage}>{errors.city?.message}</Text>
           )}
-          name="city"
-          rules={{ required: true }}
-          defaultValue=""
-        />
-        {errors.city && (
-          <Text style={styles.errorMessage}>{errors.city?.message}</Text>
-        )}
-        <Text>How old are you?</Text>
-        <Controller
-          control={control}
-          render={({ onChange, onBlur, value }) => (
-            <TextInput
-              placeholder="age"
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={value => onChange(value)}
-              value={value}
-              keyboardType="numeric"
-            />
+          <Text style={styles.text}>How old are you?</Text>
+          <Controller
+            control={control}
+            render={({ onChange, onBlur, value }) => (
+              <TextInput
+                placeholder="age"
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+                keyboardType="numeric"
+              />
+            )}
+            name="age"
+            defaultValue=""
+          />
+          {errors.age && (
+            <Text style={styles.errorMessage}>{errors.age?.message}</Text>
           )}
-          name="age"
-          defaultValue=""
-        />
-        {errors.age && (
-          <Text style={styles.errorMessage}>{errors.age?.message}</Text>
-        )}
-      </View>
-
-      <Button
-        disabled={isDirty || isValid}
-        title="Submit"
-        onPress={handleSubmit(onSubmit)}
-      />
-    </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              disabled={!isValid}
+              title="Submit"
+              onPress={handleSubmit(onSubmit)}
+            />
+          </View>
+        </ScrollView>
+      </Card>
+    </KeyboardAvoidingView>
   );
 };
 
 export const screenOptions = {
-  headerTitle: 'Information',
+  headerTitle: 'Your Information',
 };
 
 const styles = StyleSheet.create({
-  form: {
-    margin: 20,
+  screen: {
+    flex: 1,
     alignItems: 'center',
-    marginTop: 100, // must be removed
+    justifyContent: 'center',
   },
-  fieldsContainer: {
-    width: '80%',
+  infoContainer: {
+    minWidth: '80%',
     maxWidth: 400,
     maxHeight: 400,
     padding: 20,
@@ -129,6 +146,14 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderBottomColor: '#ccc',
     borderBottomWidth: 1,
+    marginBottom: 10,
+  },
+    text: {
+        fontSize: 16,
+        fontWeight:'700'
+    },
+  buttonContainer: {
+    marginTop: 50,
   },
   errorMessage: {
     color: 'red',

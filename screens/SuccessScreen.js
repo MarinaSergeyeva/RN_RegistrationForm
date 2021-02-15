@@ -4,9 +4,13 @@ import { StyleSheet, Text, View } from 'react-native';
 const SuccessScreen = () => {
   return (
     <View style={styles.screen}>
-      <Text>Success!</Text>
+      <Text style={styles.text}>Success!</Text>
     </View>
   );
+};
+
+export const screenOptions = {
+  headerTitle: 'Congratulations!',
 };
 
 const styles = StyleSheet.create({
@@ -15,6 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  text: { fontSize: 16 },
 });
 
 export default SuccessScreen;

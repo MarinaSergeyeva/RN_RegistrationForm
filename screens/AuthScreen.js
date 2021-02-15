@@ -1,73 +1,96 @@
 import React from 'react';
-import { Formik, ErrorMessage } from 'formik';
-import { Button, TextInput, View, StyleSheet, Text } from 'react-native';
+import { useFormik } from 'formik';
+import {
+  Button,
+  TextInput,
+  View,
+  StyleSheet,
+  Text,
+  KeyboardAvoidingView,
+  ScrollView,
+} from 'react-native';
 import { authValidationSchema } from '../schemas/AuthValidationSchema';
+import Card from '../components/Card';
 
 const AuthScreen = props => {
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      email: '',
+      password: '',
+    },
+    onSubmit: (values, { setSubmitting }) => {
+      setSubmitting(false);
+    },
+    validationSchema: authValidationSchema,
+  });
+
+  const {
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    values,
+    touched,
+    errors,
+    isValid,
+    dirty,
+  } = formik;
+
+  const { navigation } = props;
+
+  const onHandleFormSubmit = () => {
+    handleSubmit();
+    navigation.navigate('Info');
+  };
+
   return (
-    <Formik
-      initialValues={{ username: '', email: '', password: '' }}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
-        setSubmitting(false);
-        resetForm({
-          values: { username: '', email: '', password: '' },
-        });
-      }}
-      validationSchema={authValidationSchema}
+    <KeyboardAvoidingView
+      behavior="height"
+      keyboardVerticalOffset={50}
+      style={styles.screen}
     >
-      {({
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        values,
-        touched,
-        errors,
-        isValid,
-        dirty,
-      }) => {
-        return (
-          <View style={styles.form}>
-            <View style={styles.fieldsContainer}>
-              <TextInput
-                placeholder="Username"
-                onChangeText={handleChange('username')}
-                onBlur={handleBlur('username')}
-                value={values.username}
-                style={styles.input}
-              />
-              <Text style={styles.errorMessage}>
-                {touched.username && errors.username}
-              </Text>
-              <TextInput
-                placeholder="email"
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                style={styles.input}
-              />
-              <Text style={styles.errorMessage}>
-                {touched.email && errors.email}
-              </Text>
-              <TextInput
-                placeholder="password"
-                onChangeText={handleChange('password')}
-                onBlur={handleBlur('password')}
-                value={values.password}
-                style={styles.input}
-              />
-              <Text style={styles.errorMessage}>
-                {touched.password && errors.password}
-              </Text>
-            </View>
+      <Card style={styles.infoContainer}>
+        <ScrollView>
+          <TextInput
+            placeholder="Username"
+            onChangeText={handleChange('username')}
+            onBlur={handleBlur('username')}
+            value={values.username}
+            style={styles.input}
+          />
+          <Text style={styles.errorMessage}>
+            {touched.username && errors.username}
+          </Text>
+          <TextInput
+            placeholder="email"
+            onChangeText={handleChange('email')}
+            onBlur={handleBlur('email')}
+            value={values.email}
+            style={styles.input}
+          />
+          <Text style={styles.errorMessage}>
+            {touched.email && errors.email}
+          </Text>
+          <TextInput
+            placeholder="password"
+            onChangeText={handleChange('password')}
+            onBlur={handleBlur('password')}
+            value={values.password}
+            style={styles.input}
+          />
+          <Text style={styles.errorMessage}>
+            {touched.password && errors.password}
+          </Text>
+          <View style={styles.buttonContainer}>
             <Button
               disabled={!isValid || !dirty}
-              onPress={handleSubmit}
+              onPress={onHandleFormSubmit}
               title="Next"
             />
           </View>
-        );
-      }}
-    </Formik>
+        </ScrollView>
+      </Card>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -76,13 +99,13 @@ export const screenOptions = {
 };
 
 const styles = StyleSheet.create({
-  form: {
-    margin: 20,
+  screen: {
+    flex: 1,
     alignItems: 'center',
-    marginTop: 100, // must be removed
+    justifyContent: 'center',
   },
-  fieldsContainer: {
-    width: '80%',
+  infoContainer: {
+    minWidth: '80%',
     maxWidth: 400,
     maxHeight: 400,
     padding: 20,
@@ -93,6 +116,9 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderBottomColor: '#ccc',
     borderBottomWidth: 1,
+  },
+  buttonContainer: {
+    marginTop: 50,
   },
   errorMessage: {
     color: 'red',

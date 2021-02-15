@@ -7,6 +7,12 @@ import AuthScreen, {
 import InfoScreen, {
   screenOptions as infoScreenOptions,
 } from '../screens/InfoScreen';
+import SuccessScreen, {
+  screenOptions as successScreenOptions,
+} from '../screens/SuccessScreen';
+import Modal, {
+  screenOptions as modalScreenOptions,
+} from '../components/Modal';
 
 const defaultNavOptions = {
   headerStyle: {
@@ -32,6 +38,16 @@ export const AuthNavigator = () => {
         name="Info"
         component={InfoScreen}
         options={infoScreenOptions}
+      />
+      <AuthStackNavigator.Screen
+        name="Success"
+        component={SuccessScreen}
+        options={successScreenOptions}
+      />
+      <AuthStackNavigator.Screen
+        name="MyModal"
+        component={Modal}
+        options={modalScreenOptions}
       />
     </AuthStackNavigator.Navigator>
   );
