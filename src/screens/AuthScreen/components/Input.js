@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
@@ -16,22 +16,21 @@ const Input = props => {
     errors,
   } = props;
 
-  const saveInputToState = () => {
-    if (fieldName === 'password') {
-      return;
-    }
-    const result = {
-      [fieldName]: values[fieldName],
-    };
+  useEffect(() => {
+     if (fieldName === 'password') {
+       return;
+     }
+     const result = {
+       [fieldName]: values[fieldName],
+     };
     dispatch(authActions.authSuccess(result));
-  };
+  }, [values]);
 
   return (
     <View>
       <TextInput
         name={fieldName}
         placeholder={fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}
-        onChange={saveInputToState}
         onChangeText={handleChange(fieldName)}
         onBlur={handleBlur(fieldName)}
         value={values[fieldName]}

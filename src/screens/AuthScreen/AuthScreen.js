@@ -15,7 +15,6 @@ import Card from '../../components/Card';
 import Input from './components/Input';
 import { useDispatch, useStore } from 'react-redux';
 import authActions from '../../redux/actions/authActions';
-import { useTextInputValue } from '../../hooks/useInputValue';
 
 const AuthScreen = props => {
   const dispatch = useDispatch();

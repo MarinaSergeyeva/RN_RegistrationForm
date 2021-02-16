@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useController } from 'react-hook-form';
 import { useTheme } from 'react-native-paper';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
@@ -20,14 +20,12 @@ const Input = props => {
 
   const dispatch = useDispatch();
 
-  const saveInputToState = () => {
-    console.log('value', value);
-    console.log('fieldName', fieldName);
-       const result = {
+  useEffect(() => {
+    const result = {
       [fieldName]: value,
     };
     dispatch(infoActions.infoSuccess(result));
-  };
+  }, [value]);
 
   return (
     <View>
@@ -36,7 +34,6 @@ const Input = props => {
         placeholder={fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}
         onBlur={onBlur}
         onChangeText={value => onChange(value)}
-        onChange={saveInputToState}
         value={value}
         onSubmitEditing={() => console.log('make focus for next input')}
         inputRef={ref}
