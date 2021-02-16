@@ -10,8 +10,9 @@ import {
   ScrollView,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { authValidationSchema } from '../schemas/AuthValidationSchema';
-import Card from '../components/Card';
+import { authValidationSchema } from '../../schemas/AuthValidationSchema';
+import Card from '../../components/Card';
+import Input from './components/Input';
 
 const AuthScreen = props => {
   const formik = useFormik({
@@ -37,7 +38,7 @@ const AuthScreen = props => {
     dirty,
   } = formik;
 
-  const { colors, fonts } = useTheme();
+  const { colors } = useTheme();
   const { navigation } = props;
 
   const onHandleFormSubmit = () => {
@@ -53,36 +54,30 @@ const AuthScreen = props => {
     >
       <Card style={styles.infoContainer}>
         <ScrollView>
-          <TextInput
-            placeholder="Username"
-            onChangeText={handleChange('username')}
-            onBlur={handleBlur('username')}
-            value={values.username}
-            style={styles.input}
+          <Input
+            fieldName="username"
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            values={values}
+            touched={touched}
+            errors={errors}
           />
-          <Text style={{ ...fonts.light, ...styles.errorMessage }}>
-            {touched.username && errors.username}
-          </Text>
-          <TextInput
-            placeholder="email"
-            onChangeText={handleChange('email')}
-            onBlur={handleBlur('email')}
-            value={values.email}
-            style={styles.input}
+          <Input
+            fieldName="email"
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            values={values}
+            touched={touched}
+            errors={errors}
           />
-          <Text style={{ ...fonts.light, ...styles.errorMessage }}>
-            {touched.email && errors.email}
-          </Text>
-          <TextInput
-            placeholder="password"
-            onChangeText={handleChange('password')}
-            onBlur={handleBlur('password')}
-            value={values.password}
-            style={styles.input}
+          <Input
+            fieldName="password"
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            values={values}
+            touched={touched}
+            errors={errors}
           />
-          <Text style={{ ...fonts.light, ...styles.errorMessage }}>
-            {touched.password && errors.password}
-          </Text>
           <View style={styles.buttonContainer}>
             <Button
               disabled={!isValid || !dirty}
@@ -97,10 +92,6 @@ const AuthScreen = props => {
   );
 };
 
-export const screenOptions = {
-  headerTitle: 'Authenticate',
-};
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -113,19 +104,8 @@ const styles = StyleSheet.create({
     maxHeight: 400,
     padding: 20,
   },
-  input: {
-    textAlign: 'center',
-    paddingHorizontal: 2,
-    paddingVertical: 5,
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1,
-  },
   buttonContainer: {
     marginTop: 50,
-  },
-  errorMessage: {
-    color: 'red',
-    textAlign: 'center',
   },
 });
 
