@@ -29,7 +29,7 @@ export const AuthNavigator = () => {
   return (
     <AuthStackNavigator.Navigator
       screenOptions={defaultNavOptions}
-      initialRouteName="Info"
+      initialRouteName="Auth"
     >
       <AuthStackNavigator.Screen
         name="Auth"
