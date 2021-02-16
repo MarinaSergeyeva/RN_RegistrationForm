@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import {
   Button,
@@ -13,8 +13,13 @@ import { useTheme } from 'react-native-paper';
 import { authValidationSchema } from '../../schemas/AuthValidationSchema';
 import Card from '../../components/Card';
 import Input from './components/Input';
+import { useDispatch, useStore } from 'react-redux';
+import authActions from '../../redux/actions/authActions';
+import { useTextInputValue } from '../../hooks/useInputValue';
 
 const AuthScreen = props => {
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       username: '',
