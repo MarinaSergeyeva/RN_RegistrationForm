@@ -34,7 +34,6 @@ const InfoScreen = props => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const success = Math.random() > 0.3;
-        console.log('success', success);
 
         if (success) {
           resolve(data);
@@ -64,6 +63,7 @@ const InfoScreen = props => {
             name="country"
             fieldName="country"
             errors={errors}
+            nextRef='city'
           />
           <Input
             title="Where were you born?"
@@ -71,6 +71,7 @@ const InfoScreen = props => {
             name="city"
             fieldName="city"
             errors={errors}
+            
           />
           <Input
             title="How old are you?"

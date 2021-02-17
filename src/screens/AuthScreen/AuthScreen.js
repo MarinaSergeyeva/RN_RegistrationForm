@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import {
   Button,
-  TextInput,
   View,
   StyleSheet,
-  Text,
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
@@ -13,12 +11,8 @@ import { useTheme } from 'react-native-paper';
 import { authValidationSchema } from '../../schemas/AuthValidationSchema';
 import Card from '../../components/Card';
 import Input from './components/Input';
-import { useDispatch, useStore } from 'react-redux';
-import authActions from '../../redux/actions/authActions';
 
 const AuthScreen = props => {
-  const dispatch = useDispatch();
-
   const formik = useFormik({
     initialValues: {
       username: '',

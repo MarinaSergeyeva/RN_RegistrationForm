@@ -5,7 +5,6 @@ const infoRequest = () => ({
 });
 
 const infoSuccess = credential => {
-  console.log('credential', credential);
   return {
     type: infoConstants.INFO_SUCCESS,
     payload: credential,

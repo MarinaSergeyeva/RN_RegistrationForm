@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 const Input = props => {
   const { fonts } = useTheme();
-  const { control, name, fieldName, title, errors } = props;
+  const { control, name, fieldName, title, errors, nextRef } = props;
   const {
     field: { ref, onChange, onBlur, value },
     meta: { invalid, isTouched, isDirty },
