@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useFormik } from 'formik';
 import {
   Button,
@@ -44,16 +44,17 @@ const AuthScreen = props => {
     navigation.navigate('Info');
   };
 
-
+  const emailInput = useRef(null);
+  const passwordInput = useRef(null);
 
   return (
     <KeyboardAvoidingView
+      enabled
       behavior="height"
       keyboardVerticalOffset={50}
       style={styles.screen}
     >
       <Card style={styles.infoContainer}>
-      
         <ScrollView>
           <Input
             fieldName="username"
@@ -62,6 +63,8 @@ const AuthScreen = props => {
             values={values}
             touched={touched}
             errors={errors}
+            returnKeyType="next"
+            onSubmitEditing={() => emailInput.current.focus()}
           />
           <Input
             fieldName="email"
@@ -70,6 +73,9 @@ const AuthScreen = props => {
             values={values}
             touched={touched}
             errors={errors}
+            returnKeyType="next"
+            inputRef={emailInput}
+            onSubmitEditing={() => passwordInput.current.focus()}
           />
           <Input
             fieldName="password"
@@ -78,10 +84,12 @@ const AuthScreen = props => {
             values={values}
             touched={touched}
             errors={errors}
+            returnKeyType="done"
+            inputRef={passwordInput}
           />
           <View style={styles.buttonContainer}>
             <Button
-              disabled={!isValid || !dirty}
+              // disabled={!isValid || !dirty}
               onPress={onHandleFormSubmit}
               title="Next"
               color={colors.primary}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
@@ -15,16 +15,18 @@ const Input = props => {
     touched,
     errors,
   } = props;
+  console.log('props', props)
 
   useEffect(() => {
-     if (fieldName === 'password') {
-       return;
-     }
-     const result = {
-       [fieldName]: values[fieldName],
-     };
+    if (fieldName === 'password') {
+      return;
+    }
+    const result = {
+      [fieldName]: values[fieldName],
+    };
     dispatch(authActions.authSuccess(result));
   }, [values]);
+
 
   return (
     <View>
@@ -35,6 +37,9 @@ const Input = props => {
         onBlur={handleBlur(fieldName)}
         value={values[fieldName]}
         style={styles.input}
+        returnKeyType={props?.returnKeyType}
+        ref={props?.inputRef}
+        onSubmitEditing={props?.onSubmitEditing}
       />
       <Text style={{ ...fonts.light, ...styles.errorMessage }}>
         {touched[fieldName] && errors[fieldName]}

@@ -7,7 +7,8 @@ import { useDispatch } from 'react-redux';
 
 const Input = props => {
   const { fonts } = useTheme();
-  const { control, name, fieldName, title, errors, nextRef } = props;
+  const { control, name, fieldName, title, errors } = props;
+  console.log('props', props)
   const {
     field: { ref, onChange, onBlur, value },
     meta: { invalid, isTouched, isDirty },
@@ -27,6 +28,7 @@ const Input = props => {
     dispatch(infoActions.infoSuccess(result));
   }, [value]);
 
+
   return (
     <View>
       <Text style={styles.text}>{title}</Text>
@@ -35,8 +37,11 @@ const Input = props => {
         onBlur={onBlur}
         onChangeText={value => onChange(value)}
         value={value}
-        onSubmitEditing={() => console.log('make focus for next input')}
+        // inputRef={ref}
         inputRef={ref}
+        onSubmitEditing={props?.onSubmitEditing}
+        returnKeyType={props?.returnKeyType}
+        keyboardType={props?.keyboardType}
         style={styles.input}
       />
       <Text style={{ ...fonts.light, ...styles.errorMessage }}>

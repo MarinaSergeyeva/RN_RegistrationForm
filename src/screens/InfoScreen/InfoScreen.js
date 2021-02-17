@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   Text,
   View,
@@ -49,6 +49,9 @@ const InfoScreen = props => {
       .finally(() => console.log('finished!'));
   };
 
+    const cityInput = useRef(null);
+  const ageInput = useRef(null);
+
   return (
     <KeyboardAvoidingView
       behavior="height" // for IOs
@@ -63,7 +66,8 @@ const InfoScreen = props => {
             name="country"
             fieldName="country"
             errors={errors}
-            nextRef='city'
+            returnKeyType="next"
+            onSubmitEditing={() => cityInput.current.focus()}
           />
           <Input
             title="Where were you born?"
@@ -71,7 +75,9 @@ const InfoScreen = props => {
             name="city"
             fieldName="city"
             errors={errors}
-            
+            returnKeyType="next"
+            inputRef={cityInput}
+            onSubmitEditing={() => ageInput.current.focus()}
           />
           <Input
             title="How old are you?"
@@ -79,6 +85,8 @@ const InfoScreen = props => {
             name="age"
             fieldName="age"
             errors={errors}
+            keyboardType="numeric"
+            inputRef={ageInput}
           />
           <View style={styles.buttonContainer}>
             <Button
