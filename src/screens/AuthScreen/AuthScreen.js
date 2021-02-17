@@ -44,6 +44,8 @@ const AuthScreen = props => {
     navigation.navigate('Info');
   };
 
+
+
   return (
     <KeyboardAvoidingView
       behavior="height"
@@ -51,6 +53,7 @@ const AuthScreen = props => {
       style={styles.screen}
     >
       <Card style={styles.infoContainer}>
+      
         <ScrollView>
           <Input
             fieldName="username"

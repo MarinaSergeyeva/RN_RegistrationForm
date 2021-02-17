@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { Platform } from 'react-native';
 import { useTheme } from 'react-native-paper';
@@ -7,12 +8,14 @@ import InfoScreen from '../screens/InfoScreen';
 import SuccessScreen from '../screens/SuccessScreen';
 import Modal from '../components/Modal';
 import screenOptions from '../screens/screenOptions';
+import CustomNavigationBar from './components/CustomNavigationBar';
 
 const AuthStackNavigator = createStackNavigator();
 
 export const AuthNavigator = () => {
   const { colors } = useTheme();
   const defaultNavOptions = {
+    header: props => <CustomNavigationBar {...props} />,
     headerStyle: {
       backgroundColor: Platform.OS === 'android' ? colors.primary : '',
     },
@@ -40,7 +43,7 @@ export const AuthNavigator = () => {
         options={screenOptions.successScreen}
       />
       <AuthStackNavigator.Screen
-        name="MyModal"
+        name="Error"
         component={Modal}
         options={screenOptions.modalScreen}
       />

@@ -41,7 +41,7 @@ const InfoScreen = props => {
         } else {
           const error = 'Something went wrong';
           reject(error);
-          navigation.navigate('MyModal');
+          navigation.navigate('Error');
         }
       }, 1000);
     })

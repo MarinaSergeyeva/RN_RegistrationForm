@@ -4,9 +4,9 @@ import { AuthNavigator } from './AuthNavigator';
 
 const NavigationStack = () => {
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
       <AuthNavigator />
-    </NavigationContainer>
+    // </NavigationContainer>
   );
 };
 

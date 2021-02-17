@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
+import { PreferencesContext } from '../PreferencesContext';
 
 const Modal = props => {
   const { colors } = useTheme();
   const { navigation } = props;
+    const { isThemeDark } = useContext(PreferencesContext);
+
   return (
     <View style={styles.screen}>
-      <Text style={styles.text}>Something went wrong</Text>
+      <Text style={{ color: isThemeDark ? 'white' : '#000', ...styles.text }}>Something went wrong</Text>
       <View style={styles.buttonContainer}>
         <Button
           color={colors.primary}
